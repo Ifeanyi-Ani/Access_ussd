@@ -1,73 +1,177 @@
 // program that transfer or buy airtime ussing USSD code
 // dial *901# 
 let stageOne = prompt("welcome to USSD Banking. \n Please note that a N6.98 network charge will \n be applied to your bank account for banking \n services on this channel. \n 1. Proceed \n 2.Cancel");
+let stageTwo;
+let transferStageOne, transferStageTwo, transferStageThree, transferStageFour, transferStageFive;
+let airtimeStageOne, airtimeStageTwo, airtimeStageThree;
 
-// if you select one
-if (stageOne == "1") {
-    let stageTwo = prompt("Access Bank \n 1 > Check Balance \n 2 > Transfer \n 3 > Airtime \n 4 > Other Services \n 5 > Access Money \n 6 > Diamond Xtra \n 7 > XtraCash Loan \n 8 > Mobile Wallet \n 9 > POS FastPay");
-    if (stageTwo == "2") {
-        let transferStageOne = prompt("Select account \n 1 > 01XXXX1115 \n 2 > 14XXXX3678");
-        if (transferStageOne == "1" || transferStageOne == "2") {
-            let transferStageTwo = parseInt(prompt("Enter amount"));
-            if (transferStageTwo < 20000) {
-                let transferStageThree = parseInt(prompt("Enter Account number"));
-                if (transferStageThree != "") {
-                    let transferStageFour = prompt("Select Beneficiary Bank \n 1 > Ecobank Nigeria \n 2 > First City Monument Bank \n 99 > Other Financial Institutions");
-                    if (transferStageFour == "1" || transferStageFour == "2") {
-                        let transferStageFive = parseInt(prompt("transfer N" + transferStageTwo.valueOf(parseInt) + " " + "to IFEANYI EMMANUEL ANI, \n" + transferStageThree.valueOf(parseInt) + ", at N26.5 charge \n To continue, please enter your Pin:"));
-                        if (transferStageFive != "") {
-                            alert("Transfer processing. N1million could be yours \n this month! To qualify, buy airtime & transfer up \n to 15x per wk. T&Cs apply ")
-                        }
-                    }
-                    else if (transferStageFour =="99"){
-                        let transferStageFourMore = prompt("Select Beneficiary Bank \n 1 > First Bank \n 2 > Sterling Bank \n 3 > Opay \n 4 > Carbon \n 98 > Next page ");
-                        if (transferStageFourMore=="1" || transferStageFourMore=="2"|| transferStageFourMore=="3" || transferStageFourMore=="4"){
-                            let transferStageFive = parseInt(prompt("transfer N" + transferStageTwo.valueOf(parseInt) + " " + "to IFEANYI EMMANUEL ANI, \n" + transferStageThree.valueOf(parseInt) + ", at N26.5 charge \n To continue, please enter your Pin:"));
-                            if (transferStageFive != "") {
-                                alert("Transfer processing. N1million could be yours \n this month! To qualify, buy airtime & transfer up \n to 15x per wk. T&Cs apply ")
-                            }
-                        }
-
-                    }
-                }
-            }
-        }
+// using function
+selectOption();
+function selectOption() {
+    if (stageOne == "1") {
+        stageTwo = prompt("Access Bank \n 1 > Check Balance \n 2 > Transfer \n 3 > Airtime \n 4 > Other Services \n 5 > Access Money \n 6 > Diamond Xtra \n 7 > XtraCash Loan \n 8 > Mobile Wallet \n 9 > POS FastPay");
+    } else {
+        firstExit();
     }
-    else if (stageTwo == "3") {
-        let airtimeStageOne = prompt ("Buy Airtime \n 1 > Self \n 2 > Others");
-        if (airtimeStageOne=="1") {
-            let airtimeStageTwo = prompt ("Select Account \n 1 > 01XXXX1114 \n 2 > 14XXXX3678")
-            if (airtimeStageTwo=="1" || airtimeStageTwo=="2") {
-                let airtimeStageThree = parseInt(prompt("Enter amount:"))
-                if (airtimeStageThree<=10000){
-                    alert("processing. N1million could be yours \n this month! To qualify, buy airtime & transfer up \n to 15x per wk. T&Cs apply ") 
-                }
-            }
-        }
-        else if (airtimeStageOne=="2") {
-            let airtimeStageTwo2 = prompt ("Select Account \n 1 > 01XXXX1114 \n 2 > 14XXXX3678")
-            if (airtimeStageTwo2=="1" || airtimeStageTwo2=="2") {
-                let airtimeStageThree2 = parseInt(prompt("Enter amount:"))
-                if (airtimeStageThree2<=10000){
-                    let airtimeStagefour2 = parseInt(prompt("Enter Phone Number (0816******):"));
-                    if (airtimeStagefour2 !=""){
-                        let airtimeStagefive2=parseInt(prompt("Purchase"+" "+ airtimeStageThree2.valueOf(parseInt)+" "+" "+"Airtime for"+" "+airtimeStagefour2 +". Enter \n Pin to proceed:"));
-                        if (airtimeStagefive2 !="") {
-                            alert("processing. N1million could be yours \n this month! To qualify, buy airtime & transfer up \n to 15x per wk. T&Cs apply ") 
-                        }
-                    }
-                }
-            }
-        }
-    }
-    else {
-        
+    selectOwnAccount();
+}
+function firstExit() {
+    if (stageOne == "2") {
+        alert("Glo Unlimited")
     }
 }
-else if (stageOne == "2") {
-    alert("Glo unlimited")
+
+// transfer decision begins
+function selectOwnAccount() {
+    if (stageTwo === "2") {
+        transferStageOne = prompt("Select account \n 1 > 01XXXX1115 \n 2 > 14XXXX3678");
+    } else if (stageTwo == "3") {
+        return airtimeOption();
+    } else {
+        return selectOption();
+    }
+    selectTrfAmount();
 }
 
+
+function selectTrfAmount() {
+    if (transferStageOne == "1" || transferStageOne == "2") {
+        transferStageTwo = parseInt(prompt("Enter amount"));
+    } else {
+        return selectOwnAccount();
+    }
+    selectPersonAccount();
+}
+
+
+function selectPersonAccount() {
+    if (transferStageTwo < 20000) {
+        transferStageThree = parseInt(prompt("Enter Account number"));
+    } else {
+        return selectTrfAmount();
+    }
+    selectBank();
+}
+
+
+function selectBank() {
+    if (transferStageThree != (null)) {
+        transferStageFour = prompt("Select Beneficiary Bank \n 1 > Ecobank Nigeria \n 2 > First City Monument Bank \n 99 > Other Financial Institutions");
+    } else {
+        return selectPersonAccount();
+    }
+    selectedBank();
+}
+
+
+function selectedBank() {
+    if (transferStageFour == "1" || transferStageFour == "2") {
+        return verifyTransaction();
+    } else if (transferStageFour == "99") {
+        return selectedBankNext();
+    } else {
+        return selectBank();
+    }
+
+}
+
+function verifyTransaction() {
+    transferStageFive = parseInt(prompt("transfer N" + transferStageTwo.valueOf(parseInt) + " " + "to IFEANYI EMMANUEL ANI, \n" + transferStageThree.valueOf(parseInt) + ", at N26.5 charge \n To continue, please enter your Pin:"));
+    transactionFeedBack()
+}
+function selectedBankNext() {
+    let transferStageFourMore = prompt("Select Beneficiary Bank \n 1 > First Bank \n 2 > Sterling Bank \n 3 > Opay \n 4 > Carbon \n 98 > Next page ");
+    if (transferStageFourMore == "1" || transferStageFourMore == "2" || transferStageFourMore == "3" || transferStageFourMore == "4") {
+        return verifyTransaction();
+    } else {
+        return selectedBankNext();
+    }
+
+}
+
+
+function transactionFeedBack() {
+    if (transferStageFive != "") {
+        alert("Transfer processing. N1million could be yours \n this month! To qualify, buy airtime & transfer up \n to 15x per wk. T&Cs apply ")
+    }
+}
+
+// if selected airtime procedure
+function airtimeOption() {
+    airtimeStageOne = prompt("Buy Airtime \n 1 > Self \n 2 > Others");
+    airtimeChoice();
+}
+
+
+function airtimeChoice() {
+    if (airtimeStageOne == "1") {
+        airtimeStageTwo = prompt("Select Account \n 1 > 01XXXX1114 \n 2 > 14XXXX3678")
+    } else if (airtimeStageOne == "2") {
+        return airtimeMoreChoice();
+    } else {
+        return airtimeOption();
+    }
+    airtimeAmount();
+}
+
+function airtimeAmount() {
+    if (airtimeStageTwo == "1" || airtimeStageTwo == "2") {
+        airtimeStageThree = parseInt(prompt("Enter amount:"))
+    } else {
+        return airtimeChoice();
+    }
+    airtimeMessage();
+}
+
+
+function airtimeMessage() {
+    if (airtimeStageThree <= 10000) {
+        alert("processing. N1million could be yours \n this month! To qualify, buy airtime & transfer up \n to 15x per wk. T&Cs apply ")
+    }
+}
+
+
+function airtimeMoreChoice() {
+    let airtimeStageTwo2, airtimeStageThree2, airtimeStagefour2, airtimeStagefive2;
+    airtimeAccount();
+    function airtimeAccount() {
+        if (airtimeStageOne == "2") {
+            airtimeStageTwo2 = prompt("Select Account \n 1 > 01XXXX1114 \n 2 > 14XXXX3678")
+        }
+        airtimeAmount();
+    }
+    function airtimeAmount() {
+        if (airtimeStageTwo2 == "1" || airtimeStageTwo2 == "2") {
+            airtimeStageThree2 = parseInt(prompt("Enter amount:"))
+        } else {
+            return airtimeAccount();
+        }
+        airtimePhoneNumber();
+    }
+    function airtimePhoneNumber() {
+        if (airtimeStageThree2 <= 10000) {
+            airtimeStagefour2 = parseInt(prompt("Enter Phone Number (0816******):"));
+        } else {
+            return airtimeAmount();
+        }
+        airtimeVerification();
+    }
+    function airtimeVerification() {
+        if (airtimeStagefour2 != "") {
+            airtimeStagefive2 = parseInt(prompt("Purchase" + " " + airtimeStageThree2.valueOf(parseInt) + " " + " " + "Airtime for" + " " + airtimeStagefour2 + ". Enter \n Pin to proceed:"));
+        } else {
+            return airtimePhoneNumber();
+        }
+        airtimeMessages();
+    }
+    function airtimeMessages() {
+        if (airtimeStagefive2 != "") {
+            alert("processing. N1million could be yours \n this month! To qualify, buy airtime & transfer up \n to 15x per wk. T&Cs apply ")
+
+        }
+    };
+
+};
 
 
 
